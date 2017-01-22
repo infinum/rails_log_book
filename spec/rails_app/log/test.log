@@ -1,0 +1,222 @@
+  [1m[35m (18.0ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (15.6ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (5.4ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (28.2ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (4.0ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (36.6ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (6.8ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (37.6ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "users"[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (2.7ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (25.9ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (14.5ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (8.9ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (7.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "Test"], ["created_at", 2017-01-22 10:45:19 UTC], ["updated_at", 2017-01-22 10:45:19 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "users"[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (5.1ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (31.7ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (13.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "admin"], ["created_at", 2017-01-22 10:48:05 UTC], ["updated_at", 2017-01-22 10:48:05 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (3.8ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (6.7ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "admin"], ["created_at", 2017-01-22 10:48:17 UTC], ["updated_at", 2017-01-22 10:48:17 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (8.9ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (26.8ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (13.0ms)[0m  [1m[35mCREATE TABLE "log_book_records" ("id" serial primary key, "author_type" character varying, "author_id" integer, "subject_type" character varying, "subject_id" integer, "parent_type" character varying, "parent_id" integer, "changes" json DEFAULT '{}', "meta" json DEFAULT '{}', "created_at" timestamp)[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_author_type_and_author_id" ON "log_book_records"  ("author_type", "author_id")[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_subject_type_and_subject_id" ON "log_book_records"  ("subject_type", "subject_id")[0m
+  [1m[35m (5.2ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_parent_type_and_parent_id" ON "log_book_records"  ("parent_type", "parent_id")[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "admin"], ["created_at", 2017-01-22 10:51:03 UTC], ["updated_at", 2017-01-22 10:51:03 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (5.2ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (32.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mDROP TABLE "log_book_records"[0m
+  [1m[35m (8.6ms)[0m  [1m[35mCREATE TABLE "log_book_records" ("id" serial primary key, "author_type" character varying, "author_id" integer, "subject_type" character varying, "subject_id" integer, "parent_type" character varying, "parent_id" integer, "changes" json DEFAULT '{}', "meta" json DEFAULT '{}', "created_at" timestamp)[0m
+  [1m[35m (3.3ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_author_type_and_author_id" ON "log_book_records"  ("author_type", "author_id")[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_subject_type_and_subject_id" ON "log_book_records"  ("subject_type", "subject_id")[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_parent_type_and_parent_id" ON "log_book_records"  ("parent_type", "parent_id")[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (6.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "admin"], ["created_at", 2017-01-22 10:52:04 UTC], ["updated_at", 2017-01-22 10:52:04 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (3.0ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (33.7ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (2.5ms)[0m  [1m[35mDROP TABLE "log_book_records"[0m
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE TABLE "log_book_records" ("id" serial primary key, "author_type" character varying, "author_id" integer, "subject_type" character varying, "subject_id" integer, "parent_type" character varying, "parent_id" integer, "changes" json DEFAULT '{}', "meta" json DEFAULT '{}', "created_at" timestamp)[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_author_type_and_author_id" ON "log_book_records"  ("author_type", "author_id")[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_subject_type_and_subject_id" ON "log_book_records"  ("subject_type", "subject_id")[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_parent_type_and_parent_id" ON "log_book_records"  ("parent_type", "parent_id")[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "admin"], ["created_at", 2017-01-22 10:53:03 UTC], ["updated_at", 2017-01-22 10:53:03 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (2.8ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (8.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (3.5ms)[0m  [1m[35mDROP TABLE "log_book_records"[0m
+  [1m[35m (10.0ms)[0m  [1m[35mCREATE TABLE "log_book_records" ("id" serial primary key, "author_type" character varying, "author_id" integer, "subject_type" character varying, "subject_id" integer, "parent_type" character varying, "parent_id" integer, "record_changes" json DEFAULT '{}', "meta" json DEFAULT '{}', "created_at" timestamp)[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_author_type_and_author_id" ON "log_book_records"  ("author_type", "author_id")[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_subject_type_and_subject_id" ON "log_book_records"  ("subject_type", "subject_id")[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_parent_type_and_parent_id" ON "log_book_records"  ("parent_type", "parent_id")[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "admin"], ["created_at", 2017-01-22 10:53:57 UTC], ["updated_at", 2017-01-22 10:53:57 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (11.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (5.0ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (14.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (4.9ms)[0m  [1m[35mDROP TABLE "log_book_records"[0m
+  [1m[35m (22.9ms)[0m  [1m[35mCREATE TABLE "log_book_records" ("id" serial primary key, "author_type" character varying, "author_id" integer, "subject_type" character varying, "subject_id" integer, "parent_type" character varying, "parent_id" integer, "record_changes" json DEFAULT '{}', "meta" json DEFAULT '{}', "created_at" timestamp)[0m
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_author_type_and_author_id" ON "log_book_records"  ("author_type", "author_id")[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_subject_type_and_subject_id" ON "log_book_records"  ("subject_type", "subject_id")[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_parent_type_and_parent_id" ON "log_book_records"  ("parent_type", "parent_id")[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (6.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "admin"], ["created_at", 2017-01-22 10:54:26 UTC], ["updated_at", 2017-01-22 10:54:26 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (7.4ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (34.5ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.9ms)[0m  [1m[35mDROP TABLE "log_book_records"[0m
+  [1m[35m (5.8ms)[0m  [1m[35mCREATE TABLE "log_book_records" ("id" serial primary key, "author_type" character varying, "author_id" integer, "subject_type" character varying, "subject_id" integer, "parent_type" character varying, "parent_id" integer, "record_changes" json DEFAULT '{}', "meta" json DEFAULT '{}', "created_at" timestamp)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_author_type_and_author_id" ON "log_book_records"  ("author_type", "author_id")[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_subject_type_and_subject_id" ON "log_book_records"  ("subject_type", "subject_id")[0m
+  [1m[35m (4.6ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_parent_type_and_parent_id" ON "log_book_records"  ("parent_type", "parent_id")[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (6.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "admin"], ["created_at", 2017-01-22 10:57:12 UTC], ["updated_at", 2017-01-22 10:57:12 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (3.4ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (7.8ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (5.4ms)[0m  [1m[35mDROP TABLE "log_book_records"[0m
+  [1m[35m (10.4ms)[0m  [1m[35mCREATE TABLE "log_book_records" ("id" serial primary key, "author_type" character varying, "author_id" integer, "subject_type" character varying, "subject_id" integer, "parent_type" character varying, "parent_id" integer, "record_changes" json DEFAULT '{}', "meta" json DEFAULT '{}', "created_at" timestamp)[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_author_type_and_author_id" ON "log_book_records"  ("author_type", "author_id")[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_subject_type_and_subject_id" ON "log_book_records"  ("subject_type", "subject_id")[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_parent_type_and_parent_id" ON "log_book_records"  ("parent_type", "parent_id")[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "admin"], ["created_at", 2017-01-22 10:57:31 UTC], ["updated_at", 2017-01-22 10:57:31 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (2.7ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (32.7ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (2.5ms)[0m  [1m[35mDROP TABLE "log_book_records"[0m
+  [1m[35m (6.9ms)[0m  [1m[35mCREATE TABLE "log_book_records" ("id" serial primary key, "author_type" character varying, "author_id" integer, "subject_type" character varying, "subject_id" integer, "parent_type" character varying, "parent_id" integer, "record_changes" json DEFAULT '{}', "meta" json DEFAULT '{}', "record_uuid" character varying, "created_at" timestamp)[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_author_type_and_author_id" ON "log_book_records"  ("author_type", "author_id")[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_subject_type_and_subject_id" ON "log_book_records"  ("subject_type", "subject_id")[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_parent_type_and_parent_id" ON "log_book_records"  ("parent_type", "parent_id")[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "admin"], ["created_at", 2017-01-22 10:58:01 UTC], ["updated_at", 2017-01-22 10:58:01 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (7.0ms)[0m  [1m[32mINSERT INTO "log_book_records" ("author_type", "author_id", "record_uuid", "created_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["author_type", "Models::User"], ["author_id", 1], ["record_uuid", "b65f9db3-7c78-4a54-85cf-856196b015cf"], ["created_at", 2017-01-22 10:58:01 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "log_book_records"[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (3.2ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (25.6ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (3.9ms)[0m  [1m[35mDROP TABLE "log_book_records"[0m
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE TABLE "log_book_records" ("id" serial primary key, "author_type" character varying, "author_id" integer, "subject_type" character varying, "subject_id" integer, "parent_type" character varying, "parent_id" integer, "record_changes" json DEFAULT '{}', "meta" json DEFAULT '{}', "record_uuid" character varying, "created_at" timestamp)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_author_type_and_author_id" ON "log_book_records"  ("author_type", "author_id")[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_subject_type_and_subject_id" ON "log_book_records"  ("subject_type", "subject_id")[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE  INDEX  "index_log_book_records_on_parent_type_and_parent_id" ON "log_book_records"  ("parent_type", "parent_id")[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "admin"], ["created_at", 2017-01-22 11:00:02 UTC], ["updated_at", 2017-01-22 11:00:02 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.4ms)[0m  [1m[32mINSERT INTO "log_book_records" ("author_type", "author_id", "record_uuid", "created_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["author_type", "Models::User"], ["author_id", 1], ["record_uuid", "1e21f432-692e-4a29-b6a2-4cf9bef85e9d"], ["created_at", 2017-01-22 11:00:02 UTC]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "log_book_records"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "log_book_records" ("author_type", "author_id", "record_uuid", "created_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["author_type", "Models::User"], ["author_id", 1], ["record_uuid", "8f785246-569f-4f8a-bd74-b845dff41546"], ["created_at", 2017-01-22 11:01:00 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
