@@ -6,6 +6,5 @@ describe LogBook::Record do
 
   it 'record created' do
     expect(LogBook::Record.count).to eq(1)
-    binding.pry
   end
 end
