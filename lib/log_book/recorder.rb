@@ -4,11 +4,9 @@ module LogBook
 
     module ClassMethods
       def has_log_book_records(options = {})
-        # class_attribute :audit_associated_with,   instance_writer: false
         class_attribute :recording_options, instance_writer: false
 
         self.recording_options = options
-        # self.audit_associated_with = options[:associated_with]
 
         has_many :records, -> { order(created_at: :asc) }, as: :subject, class_name: LogBook.config.record_class_name
 
@@ -73,15 +71,15 @@ module LogBook
       end
 
       def write_record
-        # attrs[:associated] = send(audit_associated_with) unless audit_associated_with.nil?
         return if record_changes.empty? && !destroyed?
         attrs = {
           action: LogBook.store[:action],
           record_changes: { self.class.table_name => record_changes },
           subject: self,
-          author: LogBook.store[:author],
-          meta: { self.class.table_name => log_book_meta_info }
+          author: LogBook.store[:author]
         }
+        attrs[:meta] = { self.class.table_name => log_book_meta_info } if recording_options[:meta].present?
+        attrs[:parent] = send(recording_options[:parent]) if recording_options[:parent].present?
         LogBook.config.record_class_name.create(attrs)
       end
 

@@ -46,4 +46,12 @@ module Models
     self.table_name = 'users'
     has_log_book_records meta: ->(user) { { name: user.name, arbitraty: 'arbitraty' } }
   end
+
+  class UserWithCompany < ActiveRecord::Base
+    include LogBook::Recorder
+
+    self.table_name = 'users'
+    belongs_to :company
+    has_log_book_records parent: :company
+  end
 end

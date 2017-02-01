@@ -3,6 +3,13 @@ ActiveRecord::Schema.define do
     t.string :email
     t.string :name
     t.string :address
+    t.belongs_to :company
+
+    t.timestamps
+  end
+
+  create_table :companies, force: true do |t|
+    t.string :name
 
     t.timestamps
   end

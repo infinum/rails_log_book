@@ -11,6 +11,8 @@ describe LogBook::Recorder do
 
       record = LogBook::Record.last
       expect(record.action).to eq('create')
+      expect(record.parent).to be_nil
+      expect(record.meta).to be_nil
       changes = record.record_changes['users']
       expect(changes).to have_key('email')
       expect(changes).to have_key('name')
@@ -135,11 +137,24 @@ describe LogBook::Recorder do
     end
   end
 
+  context ':parent' do
+    it 'creates a record with parent' do
+      company = Models::Company.create(name: 'company')
+      expect do
+        Models::User.with_recording do
+          Models::UserWithCompany.create(email: 'test', name: 'test', address: 'nowere', company: company)
+        end
+      end.to change(LogBook::Record, :count).by(1)
+
+      record = LogBook::Record.last
+      expect(record.action).to eq('create')
+      expect(record.parent).to eq(company)
+    end
+  end
+
   it 'does nothing' do
     expect do
       Models::UserOnly.create(email: 'test', name: 'test', address: 'nowere')
     end.to change(LogBook::Record, :count).by(0)
   end
-
-
 end
