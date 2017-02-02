@@ -1,57 +1,70 @@
-module Models
-  class User < ActiveRecord::Base
-    include LogBook::Recorder
+class User < ActiveRecord::Base
+  include LogBook::Recorder
 
-    has_log_book_records
+  has_log_book_records
+end
+
+class UserOnly < ActiveRecord::Base
+  include LogBook::Recorder
+
+  self.table_name = 'users'
+  has_log_book_records only: [:email]
+end
+
+class UserMetaTrue < ActiveRecord::Base
+  include LogBook::Recorder
+
+  self.table_name = 'users'
+  has_log_book_records meta: true
+
+  def log_book_meta
+    {
+      name: name,
+      arbitraty: 'arbitraty'
+    }
   end
+end
 
-  class UserOnly < ActiveRecord::Base
-    include LogBook::Recorder
+class UserMetaSymbol < ActiveRecord::Base
+  include LogBook::Recorder
 
-    self.table_name = 'users'
-    has_log_book_records only: [:email]
+  self.table_name = 'users'
+  has_log_book_records meta: :meta_info
+
+  def meta_info
+    {
+      name: name,
+      arbitraty: 'arbitraty'
+    }
   end
+end
 
-  class UserMetaTrue < ActiveRecord::Base
-    include LogBook::Recorder
+class UserMetaProc < ActiveRecord::Base
+  include LogBook::Recorder
 
-    self.table_name = 'users'
-    has_log_book_records meta: true
+  self.table_name = 'users'
+  has_log_book_records meta: ->(user) { { name: user.name, arbitraty: 'arbitraty' } }
+end
 
-    def log_book_meta
-      {
-        name: name,
-        arbitraty: 'arbitraty'
-      }
-    end
-  end
+class UserWithCompany < ActiveRecord::Base
+  include LogBook::Recorder
 
-  class UserMetaSymbol < ActiveRecord::Base
-    include LogBook::Recorder
+  self.table_name = 'users'
+  belongs_to :company
+  has_log_book_records parent: :company
+end
 
-    self.table_name = 'users'
-    has_log_book_records meta: :meta_info
+class UserWithAll < ActiveRecord::Base
+  include LogBook::Recorder
 
-    def meta_info
-      {
-        name: name,
-        arbitraty: 'arbitraty'
-      }
-    end
-  end
+  self.table_name = 'users'
+  belongs_to :company
+  has_log_book_records parent: :company, meta: true
 
-  class UserMetaProc < ActiveRecord::Base
-    include LogBook::Recorder
-
-    self.table_name = 'users'
-    has_log_book_records meta: ->(user) { { name: user.name, arbitraty: 'arbitraty' } }
-  end
-
-  class UserWithCompany < ActiveRecord::Base
-    include LogBook::Recorder
-
-    self.table_name = 'users'
-    belongs_to :company
-    has_log_book_records parent: :company
+  def log_book_meta
+    {
+      name: name,
+      company_name: company.name
+    }
   end
 end

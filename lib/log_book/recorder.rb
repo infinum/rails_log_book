@@ -53,19 +53,19 @@ module LogBook
       end
 
       def create_record
-        return unless recording_enabled
+        return unless LogBook.recording_enabled
         LogBook.store[:action] ||= :create
         write_record
       end
 
       def update_record
-        return unless recording_enabled
+        return unless LogBook.recording_enabled
         LogBook.store[:action] ||= :update
         write_record
       end
 
       def destroy_record
-        return unless recording_enabled
+        return unless LogBook.recording_enabled
         LogBook.store[:action] ||= :destroy
         write_record
       end
@@ -83,14 +83,6 @@ module LogBook
         LogBook.config.record_class_name.create(attrs)
       end
 
-      def recording_enabled
-        self.class.recording_enabled
-      end
-
-      def recording_enabled=(val)
-        self.class.recording_enabled = val
-      end
-
       def log_book_meta_info
         case recording_options[:meta]
         when NilClass then nil
@@ -106,19 +98,6 @@ module LogBook
     end
 
     module RecordingClassMethods
-      def with_recording
-        recording_was_disabled = recording_enabled
-        enable_recording
-        yield
-      ensure
-        disable_recording unless recording_was_disabled
-      end
-
-      def record_as(author)
-        LogBook.store[:author] = author
-        yield
-      end
-
       def recording_columns
         columns.select { |c| !non_recording_columns.include?(c.name) }
       end
@@ -138,24 +117,6 @@ module LogBook
 
       def default_ignored_attributes
         [primary_key, inheritance_column, *Array.wrap(LogBook.config.ignored_attributes)]
-      end
-
-      def recording_enabled
-        LogBook.store.fetch("#{table_name}_recording_enabled", false)
-      end
-
-      def recording_enabled=(val)
-        LogBook.store["#{table_name}_recording_enabled"] = val
-      end
-
-      private
-
-      def disable_recording
-        self.recording_enabled = false
-      end
-
-      def enable_recording
-        self.recording_enabled = true
       end
     end
   end

@@ -4,8 +4,8 @@ describe LogBook::Recorder do
   context '.with_recording' do
     it 'creates a record' do
       expect do
-        Models::User.with_recording do
-          Models::User.create(email: 'test', name: 'test', address: 'nowere')
+        LogBook.with_recording do
+          User.create(email: 'test', name: 'test', address: 'nowere')
         end
       end.to change(LogBook::Record, :count).by(1)
 
@@ -22,9 +22,9 @@ describe LogBook::Recorder do
     end
 
     it 'updates a record' do
-      user = Models::User.create(email: 'test', name: 'test', address: 'nowere')
+      user = User.create(email: 'test', name: 'test', address: 'nowere')
       expect do
-        user.with_recording do
+        LogBook.with_recording do
           user.update(email: 'test1')
         end
       end.to change(LogBook::Record, :count).by(1)
@@ -38,9 +38,9 @@ describe LogBook::Recorder do
     end
 
     it 'destroys a record' do
-      user = Models::User.create(email: 'test', name: 'test', address: 'nowere')
+      user = User.create(email: 'test', name: 'test', address: 'nowere')
       expect do
-        Models::User.with_recording do
+        LogBook.with_recording do
           user.destroy
         end
       end.to change(LogBook::Record, :count).by(1)
@@ -54,8 +54,8 @@ describe LogBook::Recorder do
 
       it 'creates a email only record' do
         expect do
-          Models::User.with_recording do
-            Models::UserOnly.create(email: 'test', name: 'test', address: 'nowere')
+          LogBook.with_recording do
+            UserOnly.create(email: 'test', name: 'test', address: 'nowere')
           end
         end.to change(LogBook::Record, :count).by(1)
 
@@ -72,8 +72,8 @@ describe LogBook::Recorder do
       context 'meta: true' do
         it 'creates a user with meta' do
           expect do
-            Models::User.with_recording do
-              Models::UserMetaTrue.create(email: 'test', name: 'test', address: 'nowere')
+            LogBook.with_recording do
+              UserMetaTrue.create(email: 'test', name: 'test', address: 'nowere')
             end
           end.to change(LogBook::Record, :count).by(1)
 
@@ -87,8 +87,8 @@ describe LogBook::Recorder do
       context 'meta: symbol' do
         it 'creates a user with meta' do
           expect do
-            Models::User.with_recording do
-              Models::UserMetaSymbol.create(email: 'test', name: 'test', address: 'nowere')
+            LogBook.with_recording do
+              UserMetaSymbol.create(email: 'test', name: 'test', address: 'nowere')
             end
           end.to change(LogBook::Record, :count).by(1)
 
@@ -102,8 +102,8 @@ describe LogBook::Recorder do
       context 'meta: proc' do
         it 'creates a user with meta' do
           expect do
-            Models::User.with_recording do
-              Models::UserMetaProc.create(email: 'test', name: 'test', address: 'nowere')
+            LogBook.with_recording do
+              UserMetaProc.create(email: 'test', name: 'test', address: 'nowere')
             end
           end.to change(LogBook::Record, :count).by(1)
 
@@ -117,11 +117,11 @@ describe LogBook::Recorder do
 
     context '.record_as' do
       it 'creates a record with author' do
-        user = Models::User.create(email: 'test', name: 'test', address: 'nowere')
+        user = User.create(email: 'test', name: 'test', address: 'nowere')
         expect do
-          Models::User.with_recording do
-            Models::User.record_as(user) do
-              Models::UserOnly.create(email: 'test', name: 'test', address: 'nowere')
+          LogBook.with_recording do
+            LogBook.record_as(user) do
+              UserOnly.create(email: 'test', name: 'test', address: 'nowere')
             end
           end
         end.to change(LogBook::Record, :count).by(1)
@@ -139,10 +139,10 @@ describe LogBook::Recorder do
 
   context ':parent' do
     it 'creates a record with parent' do
-      company = Models::Company.create(name: 'company')
+      company = Company.create(name: 'company')
       expect do
-        Models::User.with_recording do
-          Models::UserWithCompany.create(email: 'test', name: 'test', address: 'nowere', company: company)
+        LogBook.with_recording do
+          UserWithCompany.create(email: 'test', name: 'test', address: 'nowere', company: company)
         end
       end.to change(LogBook::Record, :count).by(1)
 
@@ -154,7 +154,7 @@ describe LogBook::Recorder do
 
   it 'does nothing' do
     expect do
-      Models::UserOnly.create(email: 'test', name: 'test', address: 'nowere')
+      UserOnly.create(email: 'test', name: 'test', address: 'nowere')
     end.to change(LogBook::Record, :count).by(0)
   end
 end
