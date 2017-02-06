@@ -8,7 +8,7 @@ module LogBook
 
         self.recording_options = options
 
-        has_many :records, -> { order(created_at: :asc) }, as: :subject, class_name: LogBook.config.record_class_name
+        has_many :records, -> { order(created_at: :asc) }, as: :subject
 
         on = Array.wrap(options[:on])
         after_create :create_record if on.empty? || on.include?(:create)
@@ -76,11 +76,12 @@ module LogBook
           action: LogBook.store[:action],
           record_changes: { self.class.table_name => record_changes },
           subject: self,
-          author: LogBook.store[:author]
+          author: LogBook.store[:author],
+          meta: {}
         }
         attrs[:meta] = { self.class.table_name => log_book_meta_info } if recording_options[:meta].present?
         attrs[:parent] = send(recording_options[:parent]) if recording_options[:parent].present?
-        LogBook.config.record_class_name.create(attrs)
+        LogBook::Record.create(attrs)
       end
 
       def log_book_meta_info

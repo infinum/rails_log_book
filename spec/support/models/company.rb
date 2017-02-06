@@ -3,6 +3,6 @@ class Company < ActiveRecord::Base
 
   has_log_book_records
 
-  has_many :users
+  has_many :users, class_name: 'UserWithAll'
   accepts_nested_attributes_for :users
 end

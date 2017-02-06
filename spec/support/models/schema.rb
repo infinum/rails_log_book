@@ -20,7 +20,7 @@ ActiveRecord::Schema.define do
     t.belongs_to :parent, polymorphic: true, index: true
     t.json :record_changes, default: {}
     t.json :meta, default: {}
-    t.string :record_uuid
+    t.string :request_uuid
     t.string :action
 
     t.datetime :created_at

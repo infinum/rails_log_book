@@ -54,6 +54,17 @@ describe CompaniesController, type: :controller do
       ]
     } }
   end
+
+  let(:valid_params_withouth_company) do
+    { company: {
+      users_attributes: [
+        { name: 'User1', email: 'user1@email.com' },
+        { name: 'User2', email: 'user2@email.com' },
+        { name: 'User3', email: 'user3@email.com' }
+      ]
+    } }
+  end
+
   describe '#create' do
     it 'creates a company and all its users' do
       expect do
@@ -61,8 +72,38 @@ describe CompaniesController, type: :controller do
       end.to change(LogBook::Record, :count).by(4)
 
       logs = LogBook::Record.all
-      expect(logs.map(&:record_uuid).uniq.count).to eq(1)
+      expect(logs.map(&:request_uuid).uniq.count).to eq(1)
       expect(logs.map(&:action).uniq.count).to eq(1)
+    end
+  end
+
+  describe 'squashing' do
+    it 'squashes records' do
+      LogBook.config.record_squashing = true
+      expect do
+        post :create, params: valid_params, session: { user_id: @user.id }
+      end.to change(LogBook::Record, :count).by(1)
+
+      log = LogBook::Record.last
+      expect(log.record_changes).to have_key('companies')
+      expect(log.record_changes).to have_key('users')
+      expect(log.record_changes['users'].count).to eq(3)
+      expect(log.meta).to have_key('users')
+      expect(log.meta['users'].count).to eq(3)
+    end
+
+    it 'squashes records without parent' do
+      LogBook.config.record_squashing = true
+      expect do
+        post :create, params: valid_params_withouth_company, session: { user_id: @user.id }
+      end.to change(LogBook::Record, :count).by(1)
+
+      log = LogBook::Record.last
+      expect(log.subject_type).to eq('Company')
+      expect(log.record_changes).to have_key('users')
+      expect(log.record_changes['users'].count).to eq(3)
+      expect(log.meta).to have_key('users')
+      expect(log.meta['users'].count).to eq(3)
     end
   end
 end

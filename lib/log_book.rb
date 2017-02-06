@@ -1,6 +1,7 @@
 require 'active_record'
 require 'request_store'
 require 'log_book/configuration'
+require 'log_book/squash_records'
 require 'log_book/record'
 require 'log_book/recorder'
 require 'log_book/controller_record'
@@ -25,8 +26,17 @@ module LogBook
       yield
     end
 
+    def with_record_squashing
+      yield
+      squash_records if record_squashing_enabled
+    end
+
     def recording_enabled
       LogBook.store.fetch('recording_enabled', false)
+    end
+
+    def record_squashing_enabled
+      LogBook.store.fetch('record_squashing', LogBook.config.record_squashing)
     end
 
     def disable_recording
@@ -39,6 +49,13 @@ module LogBook
 
     def recording_enabled=(val)
       LogBook.store['recording_enabled'] = val
+    end
+
+    def squash_records
+      return if LogBook.store[:request_uuid].nil?
+      records = LogBook::Record.where(request_uuid: LogBook.store[:request_uuid])
+      return if records.empty?
+      LogBook::SquashRecords.new(records).call
     end
   end
 end

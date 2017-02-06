@@ -12,7 +12,7 @@ describe LogBook::Recorder do
       record = LogBook::Record.last
       expect(record.action).to eq('create')
       expect(record.parent).to be_nil
-      expect(record.meta).to be_nil
+      expect(record.meta).to eq({})
       changes = record.record_changes['users']
       expect(changes).to have_key('email')
       expect(changes).to have_key('name')
