@@ -9,10 +9,12 @@ class CompaniesController < ActionController::Base
   private
 
   def company_params
-    params.require(:company).permit(:name, users_attributes: [:email, :name])
+    params.require(:company).permit(
+      :name, users_attributes: [:email, :name], company_info_attributes: [:address, :bio]
+    )
   end
 
-  def current_user
+  def current_author
     User.find(session[:user_id])
   end
 end

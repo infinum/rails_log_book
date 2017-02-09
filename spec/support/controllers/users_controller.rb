@@ -1,6 +1,5 @@
 class UsersController < ActionController::Base
   include LogBook::ControllerRecord
-  override_author_method :current_admin
 
   def create
     user = User.create(user_params)
@@ -8,6 +7,7 @@ class UsersController < ActionController::Base
   end
 
   def register
+    LogBook.store[:action] = 'register'
     user = User.create(user_params)
     render json: user.to_json
   end
@@ -18,7 +18,7 @@ class UsersController < ActionController::Base
     params.require(:user).permit(:email, :name)
   end
 
-  def current_admin
+  def current_author
     User.find(session[:user_id])
   end
 end

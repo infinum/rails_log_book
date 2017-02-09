@@ -13,7 +13,7 @@ describe LogBook::Recorder do
       expect(record.action).to eq('create')
       expect(record.parent).to be_nil
       expect(record.meta).to eq({})
-      changes = record.record_changes['users']
+      changes = record.record_changes
       expect(changes).to have_key('email')
       expect(changes).to have_key('name')
       expect(changes).to have_key('address')
@@ -31,7 +31,7 @@ describe LogBook::Recorder do
 
       record = LogBook::Record.last
       expect(record.action).to eq('update')
-      changes = record.record_changes['users']
+      changes = record.record_changes
       expect(changes).to have_key('email')
       expect(changes).to_not have_key('name')
       expect(changes).to_not have_key('address')
@@ -47,7 +47,7 @@ describe LogBook::Recorder do
 
       record = LogBook::Record.last
       expect(record.action).to eq('destroy')
-      expect(record.record_changes['users']).to eq({})
+      expect(record.record_changes).to eq({})
     end
 
     context ':only' do
@@ -61,7 +61,7 @@ describe LogBook::Recorder do
 
         record = LogBook::Record.last
         expect(record.action).to eq('create')
-        changes = record.record_changes['users']
+        changes = record.record_changes
         expect(changes).to have_key('email')
         expect(changes).to_not have_key('name')
         expect(changes).to_not have_key('address')
@@ -79,8 +79,8 @@ describe LogBook::Recorder do
 
           record = LogBook::Record.last
           expect(record.action).to eq('create')
-          expect(record.meta['users']['name']).to eq('test')
-          expect(record.meta['users']['arbitraty']).to eq('arbitraty')
+          expect(record.meta['name']).to eq('test')
+          expect(record.meta['arbitraty']).to eq('arbitraty')
         end
       end
 
@@ -94,8 +94,8 @@ describe LogBook::Recorder do
 
           record = LogBook::Record.last
           expect(record.action).to eq('create')
-          expect(record.meta['users']['name']).to eq('test')
-          expect(record.meta['users']['arbitraty']).to eq('arbitraty')
+          expect(record.meta['name']).to eq('test')
+          expect(record.meta['arbitraty']).to eq('arbitraty')
         end
       end
 
@@ -109,8 +109,8 @@ describe LogBook::Recorder do
 
           record = LogBook::Record.last
           expect(record.action).to eq('create')
-          expect(record.meta['users']['name']).to eq('test')
-          expect(record.meta['users']['arbitraty']).to eq('arbitraty')
+          expect(record.meta['name']).to eq('test')
+          expect(record.meta['arbitraty']).to eq('arbitraty')
         end
       end
     end
@@ -128,7 +128,7 @@ describe LogBook::Recorder do
 
         record = LogBook::Record.last
         expect(record.action).to eq('create')
-        changes = record.record_changes['users']
+        changes = record.record_changes
         expect(changes).to have_key('email')
         expect(changes).to_not have_key('name')
         expect(changes).to_not have_key('address')

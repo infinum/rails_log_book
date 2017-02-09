@@ -14,6 +14,13 @@ ActiveRecord::Schema.define do
     t.timestamps
   end
 
+  create_table :company_infos, force: true do |t|
+    t.string :address
+    t.belongs_to :company
+
+    t.timestamps
+  end
+
   create_table LogBook.config.records_table_name, force: true do |t|
     t.belongs_to :author, polymorphic: true, index: true
     t.belongs_to :subject, polymorphic: true, index: true

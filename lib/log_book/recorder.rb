@@ -21,19 +21,30 @@ module LogBook
     end
 
     module RecordingInstanceMethods
+      def to_squash?
+        recording_options[:squash]
+      end
+
       def save_with_recording
         with_recording { save }
       end
 
-      # user = User.find(1)
-      # user.with_recording do
-      #   user.update(name: 'Test')
-      # end
       def with_recording(&block)
         self.class.with_recording(&block)
       end
 
-      private
+      def changes_to_record
+        attrs = {
+          action: LogBook.store[:action],
+          record_changes: record_changes,
+          subject: self,
+          author: LogBook.store[:author],
+          meta: {}
+        }
+        attrs[:meta] = log_book_meta_info if recording_options[:meta].present?
+        attrs[:parent] = send(recording_options[:parent]) if recording_options[:parent].present?
+        attrs
+      end
 
       def recording_attributes
         attributes.except(*non_recording_columns)
@@ -42,6 +53,8 @@ module LogBook
       def non_recording_columns
         self.class.non_recording_columns
       end
+
+      private
 
       def record_changes
         if recording_options[:only]
@@ -53,35 +66,21 @@ module LogBook
       end
 
       def create_record
-        return unless LogBook.recording_enabled
-        LogBook.store[:action] ||= :create
-        write_record
+        write_record(:create)
       end
 
       def update_record
-        return unless LogBook.recording_enabled
-        LogBook.store[:action] ||= :update
-        write_record
+        write_record(:update)
       end
 
       def destroy_record
-        return unless LogBook.recording_enabled
-        LogBook.store[:action] ||= :destroy
-        write_record
+        write_record(:destroy)
       end
 
-      def write_record
-        return if record_changes.empty? && !destroyed?
-        attrs = {
-          action: LogBook.store[:action],
-          record_changes: { self.class.table_name => record_changes },
-          subject: self,
-          author: LogBook.store[:author],
-          meta: {}
-        }
-        attrs[:meta] = { self.class.table_name => log_book_meta_info } if recording_options[:meta].present?
-        attrs[:parent] = send(recording_options[:parent]) if recording_options[:parent].present?
-        LogBook::Record.create(attrs)
+      def write_record(action)
+        return unless LogBook.recording_enabled
+        LogBook.store[:action] ||= action
+        LogBook::Record.create(changes_to_record)
       end
 
       def log_book_meta_info
@@ -109,7 +108,7 @@ module LogBook
           if options[:only]
             except = column_names - Array.wrap(options[:only]).flatten.map(&:to_s)
           else
-            except = default_ignored_attributes + LogBook.config.ignored_attributes
+            except = default_ignored_attributes
             except |= Array(options[:except]).collect(&:to_s) if options[:except]
           end
           except

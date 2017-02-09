@@ -10,7 +10,6 @@ module LogBook
 
   class Configuration
     attr_accessor :records_table_name
-    attr_accessor :records_serialize_to
     attr_accessor :ignored_attributes
     attr_accessor :recording_enabled
     attr_accessor :author_method
@@ -18,7 +17,6 @@ module LogBook
 
     def initialize
       @records_table_name = 'records'
-      @records_serialize_to = JSON
       @ignored_attributes = [:updated_at, :created_at]
       @author_method = :current_user
       @record_squashing = false

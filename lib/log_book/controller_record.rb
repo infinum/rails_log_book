@@ -8,10 +8,9 @@ module LogBook
     end
 
     def enable_recording
-      LogBook.store[:action] = action_name
       LogBook.store[:controller] = self
-      LogBook.store[:author] = send(self.class.author_method)
-      LogBook.store[:request_uuid] = try(:request).try(:uuid) || SecureRandom.uuid
+      LogBook.store[:author] = current_author
+      LogBook.store[:request_uuid] = try(:request).try(:uuid) || SecureRandom.hex
       LogBook.enable_recording
     end
 
@@ -21,14 +20,9 @@ module LogBook
       end
     end
 
-    module ClassMethods
-      def override_author_method(val)
-        @author_method = val
-      end
-
-      def author_method
-        @author_method || LogBook.config.author_method
-      end
+    def current_author
+      raise NotImplementedError unless respond_to?(LogBook.config.author_method)
+      send(LogBook.config.author_method)
     end
   end
 end

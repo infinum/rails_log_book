@@ -59,7 +59,7 @@ class UserWithAll < ActiveRecord::Base
 
   self.table_name = 'users'
   belongs_to :company
-  has_log_book_records parent: :company, meta: true
+  has_log_book_records parent: :company, meta: true, squash: true
 
   def log_book_meta
     {

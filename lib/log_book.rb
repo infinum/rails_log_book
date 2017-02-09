@@ -22,8 +22,11 @@ module LogBook
     end
 
     def record_as(author)
+      prev_author = LogBook.store[:author]
       LogBook.store[:author] = author
       yield
+    ensure
+      LogBook.store[:author] = prev_author
     end
 
     def with_record_squashing
