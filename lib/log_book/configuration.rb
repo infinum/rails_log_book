@@ -14,6 +14,7 @@ module LogBook
     attr_accessor :recording_enabled
     attr_accessor :author_method
     attr_accessor :record_squashing
+    attr_accessor :skip_if_empty_actions
 
     def initialize
       @records_table_name = 'records'
@@ -21,6 +22,7 @@ module LogBook
       @author_method = :current_user
       @record_squashing = false
       @recording_enabled = false
+      @skip_if_empty_actions = [:update]
     end
   end
 end

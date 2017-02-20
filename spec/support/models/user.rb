@@ -17,7 +17,7 @@ class UserMetaTrue < ActiveRecord::Base
   self.table_name = 'users'
   has_log_book_records meta: true
 
-  def log_book_meta
+  def log_book_meta(_record)
     {
       name: name,
       arbitraty: 'arbitraty'
@@ -31,7 +31,7 @@ class UserMetaSymbol < ActiveRecord::Base
   self.table_name = 'users'
   has_log_book_records meta: :meta_info
 
-  def meta_info
+  def meta_info(_record)
     {
       name: name,
       arbitraty: 'arbitraty'
@@ -43,7 +43,7 @@ class UserMetaProc < ActiveRecord::Base
   include LogBook::Recorder
 
   self.table_name = 'users'
-  has_log_book_records meta: ->(user) { { name: user.name, arbitraty: 'arbitraty' } }
+  has_log_book_records meta: ->(user, _record) { { name: user.name, arbitraty: 'arbitraty' } }
 end
 
 class UserWithCompany < ActiveRecord::Base
@@ -61,7 +61,7 @@ class UserWithAll < ActiveRecord::Base
   belongs_to :company
   has_log_book_records parent: :company, meta: true, squash: true
 
-  def log_book_meta
+  def log_book_meta(_record)
     {
       name: name,
       company_name: company.name

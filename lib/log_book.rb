@@ -21,6 +21,14 @@ module LogBook
       disable_recording unless recording_was_disabled
     end
 
+    def without_recording
+      recording_was_enabled = recording_enabled
+      disable_recording
+      yield
+    ensure
+      enable_recording unless recording_was_enabled
+    end
+
     def record_as(author)
       prev_author = LogBook.store[:author]
       LogBook.store[:author] = author
@@ -35,11 +43,11 @@ module LogBook
     end
 
     def recording_enabled
-      LogBook.store.fetch('recording_enabled', false)
+      LogBook.store.fetch(:recording_enabled, false)
     end
 
     def record_squashing_enabled
-      LogBook.store.fetch('record_squashing', LogBook.config.record_squashing)
+      LogBook.store.fetch(:record_squashing, LogBook.config.record_squashing)
     end
 
     def disable_recording
@@ -51,7 +59,7 @@ module LogBook
     end
 
     def recording_enabled=(val)
-      LogBook.store['recording_enabled'] = val
+      LogBook.store[:recording_enabled] = val
     end
 
     def squash_records

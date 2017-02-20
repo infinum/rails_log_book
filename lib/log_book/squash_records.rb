@@ -7,12 +7,13 @@ module LogBook
     def call
       records.group_by(&:parent).each do |parent, children|
         next if parent.nil?
-        children_to_squash = children.select { |child| child.subject.to_squash? }
+        children_to_squash = children.select { |child| child.subject.try(:to_squash?) }
         next if children_to_squash.empty?
 
         parent_in_records = parent_in_records(parent)
         parent_in_records.record_changes.merge!(squashed_changes(children_to_squash, :record_changes))
         parent_in_records.meta.merge!(squashed_changes(children_to_squash, :meta))
+        parent_in_records.created_at ||= children_to_squash.first.created_at
         parent_in_records.save
 
         children_to_squash.each(&:delete)
@@ -32,7 +33,7 @@ module LogBook
 
     def parent_in_records(parent)
       records.find { |record| record.subject == parent } ||
-        Record.new(parent.changes_to_record)
+        parent.new_record
     end
   end
 end

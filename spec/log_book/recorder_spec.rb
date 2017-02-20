@@ -152,6 +152,19 @@ describe LogBook::Recorder do
     end
   end
 
+  context ':skip_if_empty_actions' do
+    it 'skip an empty update' do
+      user = UserOnly.create(email: 'test', name: 'test', address: 'nowere')
+      expect do
+        LogBook.with_recording do
+          LogBook.record_as(user) do
+            user.update(name: 'test1')
+          end
+        end
+      end.to change(LogBook::Record, :count).by(0)
+    end
+  end
+
   it 'does nothing' do
     expect do
       UserOnly.create(email: 'test', name: 'test', address: 'nowere')

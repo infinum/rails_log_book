@@ -8,7 +8,7 @@ module LogBook
 
         self.recording_options = options
 
-        has_many :records, -> { order(created_at: :asc) }, as: :subject
+        has_many :records, -> { order(created_at: :asc) }, as: :subject, class_name: 'LogBook::Record'
 
         on = Array.wrap(options[:on])
         after_create :create_record if on.empty? || on.include?(:create)
@@ -33,17 +33,17 @@ module LogBook
         self.class.with_recording(&block)
       end
 
-      def changes_to_record
-        attrs = {
+      def new_record
+        record = LogBook::Record.new(
           action: LogBook.store[:action],
           record_changes: record_changes,
-          subject: self,
           author: LogBook.store[:author],
+          subject: self,
           meta: {}
-        }
-        attrs[:meta] = log_book_meta_info if recording_options[:meta].present?
-        attrs[:parent] = send(recording_options[:parent]) if recording_options[:parent].present?
-        attrs
+        )
+        record.meta = log_book_meta_info(record) if recording_options[:meta].present?
+        record.parent = send(recording_options[:parent]) if recording_options[:parent].present?
+        record
       end
 
       def recording_attributes
@@ -80,19 +80,21 @@ module LogBook
       def write_record(action)
         return unless LogBook.recording_enabled
         LogBook.store[:action] ||= action
-        LogBook::Record.create(changes_to_record)
+        record = new_record
+        return unless record.changes_to_record?
+        record.save
       end
 
-      def log_book_meta_info
+      def log_book_meta_info(record)
         case recording_options[:meta]
         when NilClass then nil
-        when Symbol then send(recording_options[:meta])
-        when Proc then recording_options[:meta].call(self)
-        when TrueClass then log_book_meta
+        when Symbol then send(recording_options[:meta], record)
+        when Proc then recording_options[:meta].call(self, record)
+        when TrueClass then log_book_meta(record)
         end
       end
 
-      def log_book_meta
+      def log_book_meta(_record)
         raise NotImplementedError
       end
     end

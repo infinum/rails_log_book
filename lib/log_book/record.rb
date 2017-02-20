@@ -16,10 +16,18 @@ module LogBook
       subject.class.table_name
     end
 
+    def changes_to_record?
+      !(record_changes == {} && skip_if_empty_actions.include?(action))
+    end
+
     private
 
     def set_request_uuid
       self.request_uuid ||= LogBook.store[:request_uuid] || SecureRandom.uuid
+    end
+
+    def skip_if_empty_actions
+      (subject.recording_options[:skip_if_empty_actions] || LogBook.config.skip_if_empty_actions).map(&:to_s)
     end
   end
 end
