@@ -4,4 +4,5 @@ LogBook.configure do |config|
   # config.author_method = :current_user
   # config.recording_enabled = false
   # config.record_squashing = true
+  # config.skip_if_empty_actions = [:update]
 end
