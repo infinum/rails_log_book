@@ -6,6 +6,7 @@ require 'log_book/record'
 require 'log_book/recorder'
 require 'log_book/controller_record'
 require 'log_book/version'
+require 'log_book/railtie'
 
 module LogBook
   class << self

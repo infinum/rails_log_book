@@ -9,6 +9,7 @@ module LogBook
         self.recording_options = options
 
         has_many :records, -> { order(created_at: :asc) }, as: :subject, class_name: 'LogBook::Record'
+        scope :with_records, -> { joins(:records) }
 
         on = Array.wrap(options[:on])
         after_create :create_record if on.empty? || on.include?(:create)
