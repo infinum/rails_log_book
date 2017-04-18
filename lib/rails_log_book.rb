@@ -66,7 +66,7 @@ module LogBook
     def squash_records
       return if LogBook.store[:request_uuid].nil?
       records = LogBook::Record.where(request_uuid: LogBook.store[:request_uuid])
-      return if records.empty?
+      return unless records.exists?
       LogBook::SquashRecords.new(records).call
     end
   end
