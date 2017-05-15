@@ -1,6 +1,6 @@
 require 'rails/generators/migration'
 require 'generators/log_book/migration'
-require 'log_book'
+require 'rails_log_book'
 
 module LogBook
   module Generators
