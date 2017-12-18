@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'rails_log_book'
   spec.version       = LogBook::VERSION
   spec.authors       = ['Stjepan Hadjic']
-  spec.email         = ['d4be4st@gmail.com']
+  spec.email         = ['stjepan.hadjic@infinum.co']
 
   spec.summary       = 'Write a short summary, because Rubygems requires one.'
   spec.description   = 'Write a longer description or delete this line.'
