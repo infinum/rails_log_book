@@ -10,6 +10,7 @@ ActiveRecord::Schema.define do
 
   create_table :companies, force: true do |t|
     t.string :name
+    t.string :description
 
     t.timestamps
   end

@@ -6,6 +6,13 @@ class CompaniesController < ActionController::Base
     render json: company.to_json
   end
 
+  def update
+    company = Company.find(params[:id])
+    company.update(company_params)
+    company.update(description: 'Something third')
+    render json: company.to_json
+  end
+
   private
 
   def company_params

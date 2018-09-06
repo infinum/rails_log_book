@@ -32,5 +32,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry-byebug'
 
   spec.add_dependency 'request_store'
-  spec.add_dependency 'activerecord', '>= 4.0', '< 5.1'
+  spec.add_dependency 'activerecord', '> 5.2'
 end

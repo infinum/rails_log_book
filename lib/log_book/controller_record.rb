@@ -21,7 +21,7 @@ module LogBook
     end
 
     def current_author
-      raise NotImplementedError unless respond_to?(LogBook.config.author_method)
+      raise NotImplementedError unless respond_to?(LogBook.config.author_method, true)
       send(LogBook.config.author_method)
     end
   end

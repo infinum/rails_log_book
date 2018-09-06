@@ -34,19 +34,6 @@ module LogBook
         self.class.with_recording(&block)
       end
 
-      def new_record
-        record = LogBook::Record.new(
-          action: LogBook.store[:action],
-          record_changes: record_changes,
-          author: LogBook.store[:author],
-          subject: self,
-          meta: {}
-        )
-        record.meta = log_book_meta_info(record) if recording_options[:meta].present?
-        record.parent = send(recording_options[:parent]) if recording_options[:parent].present?
-        record
-      end
-
       def recording_attributes
         attributes.except(*non_recording_columns)
       end
@@ -60,9 +47,9 @@ module LogBook
       def record_changes
         if recording_options[:only]
           recording_columns = self.class.recording_columns.map(&:name)
-          changes.slice(*recording_columns)
+          saved_changes.slice(*recording_columns)
         else
-          changes.except(*non_recording_columns)
+          saved_changes.except(*non_recording_columns)
         end
       end
 
@@ -80,10 +67,22 @@ module LogBook
 
       def write_record(action)
         return unless LogBook.recording_enabled
-        LogBook.store[:action] ||= action
-        record = new_record
+        record = new_record(LogBook.store[:action] || action)
         return unless record.changes_to_record?
         record.save
+      end
+
+      def new_record(action)
+        record = LogBook::Record.new(
+          action: action,
+          record_changes: record_changes,
+          author: LogBook.store[:author],
+          subject: self,
+          meta: {}
+        )
+        record.meta = log_book_meta_info(record) if recording_options[:meta].present?
+        record.parent = send(recording_options[:parent]) if recording_options[:parent].present?
+        record
       end
 
       def log_book_meta_info(record)

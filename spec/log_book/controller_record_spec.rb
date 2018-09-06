@@ -101,7 +101,7 @@ describe CompaniesController, type: :controller do
       expect(log.meta['users'].count).to eq(3)
     end
 
-    it 'squashes records without parent' do
+    it 'squashes records without parent record' do
       LogBook.config.record_squashing = true
       expect do
         post :create, params: valid_params_withouth_company, session: { user_id: @user.id }
@@ -113,6 +113,19 @@ describe CompaniesController, type: :controller do
       expect(log.record_changes['users'].count).to eq(3)
       expect(log.meta).to have_key('users')
       expect(log.meta['users'].count).to eq(3)
+    end
+
+    it 'squashes records without parent' do
+      LogBook.config.record_squashing = true
+      company = Company.create(name: 'something')
+      expect do
+        patch :update, params: {id: company.id, company: {name: 'something else'}}, session: { user_id: @user.id }
+      end.to change(LogBook::Record, :count).by(1)
+
+      log = LogBook::Record.last
+      expect(log.subject_type).to eq('Company')
+      expect(log.record_changes).to have_key('name')
+      expect(log.record_changes).to have_key('description')
     end
 
     it 'squashes only squashable records' do
