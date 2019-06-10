@@ -1,7 +1,10 @@
 require 'active_record'
-require 'request_store'
+require 'active_support/current_attributes'
+require 'dry-configurable'
+
 require 'log_book/configuration'
-require 'log_book/squash_records'
+require 'log_book/store'
+require 'log_book/save_records'
 require 'log_book/record'
 require 'log_book/recorder'
 require 'log_book/controller_record'
@@ -10,64 +13,52 @@ require 'log_book/railtie'
 
 module LogBook
   class << self
-    def store
-      RequestStore.store[:log_book] ||= {}
-    end
-
     def with_recording
       recording_was_disabled = recording_enabled
       enable_recording
+      LogBook::Store.records = Set.new
+
       yield
+
+      LogBook::SaveRecords.call
     ensure
       disable_recording unless recording_was_disabled
     end
 
-    def without_recording
-      recording_was_enabled = recording_enabled
-      disable_recording
-      yield
-    ensure
-      enable_recording unless recording_was_enabled
-    end
-
     def record_as(author)
-      prev_author = LogBook.store[:author]
-      LogBook.store[:author] = author
+      prev_author = LogBook::Store.author
+      LogBook::Store.author = author
       yield
     ensure
-      LogBook.store[:author] = prev_author
+      LogBook::Store.author = prev_author
     end
 
-    def with_record_squashing
+    def record_action(action)
+      prev_action = LogBook::Store.action
+      LogBook::Store.action = action
       yield
-      squash_records if record_squashing_enabled
+    ensure
+      LogBook::Store.action = prev_action
     end
 
     def recording_enabled
-      LogBook.store.fetch(:recording_enabled, false)
+      LogBook::Store.recording_enabled || LogBook.config.recording_enabled
     end
 
     def record_squashing_enabled
-      LogBook.store.fetch(:record_squashing, LogBook.config.record_squashing)
+      LogBook::Store.record_squashing || LogBook.config.record_squashing
     end
 
     def disable_recording
-      LogBook.recording_enabled = false
+      LogBook::Store.recording_enabled = false
     end
 
     def enable_recording
-      LogBook.recording_enabled = true
+      LogBook::Store.recording_enabled = true
     end
 
-    def recording_enabled=(val)
-      LogBook.store[:recording_enabled] = val
-    end
-
-    def squash_records
-      return if LogBook.store[:request_uuid].nil?
-      records = LogBook::Record.where(request_uuid: LogBook.store[:request_uuid])
-      return unless records.exists?
-      LogBook::SquashRecords.new(records).call
+    def action=(val)
+      LogBook::Store.action = val
     end
   end
 end

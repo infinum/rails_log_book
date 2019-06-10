@@ -23,7 +23,7 @@ module LogBook
     private
 
     def set_request_uuid
-      self.request_uuid ||= LogBook.store[:request_uuid] || SecureRandom.uuid
+      self.request_uuid ||= LogBook::Store.request_uuid || SecureRandom.uuid
     end
 
     def skip_if_empty_actions

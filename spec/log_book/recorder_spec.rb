@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe LogBook::Recorder do
+  before { LogBook.disable_recording }
+
   context '.with_recording' do
     it 'creates a record' do
       expect do
@@ -10,7 +12,6 @@ describe LogBook::Recorder do
       end.to change(LogBook::Record, :count).by(1)
 
       record = LogBook::Record.last
-      expect(record.action).to eq('create')
       expect(record.parent).to be_nil
       expect(record.meta).to eq({})
       changes = record.record_changes
@@ -30,7 +31,6 @@ describe LogBook::Recorder do
       end.to change(LogBook::Record, :count).by(1)
 
       record = LogBook::Record.last
-      expect(record.action).to eq('update')
       changes = record.record_changes
       expect(changes).to have_key('email')
       expect(changes).to_not have_key('name')
@@ -46,7 +46,6 @@ describe LogBook::Recorder do
       end.to change(LogBook::Record, :count).by(1)
 
       record = LogBook::Record.last
-      expect(record.action).to eq('destroy')
       # expect(record.record_changes).to eq({})
     end
 
@@ -60,7 +59,6 @@ describe LogBook::Recorder do
         end.to change(LogBook::Record, :count).by(1)
 
         record = LogBook::Record.last
-        expect(record.action).to eq('create')
         changes = record.record_changes
         expect(changes).to have_key('email')
         expect(changes).to_not have_key('name')
@@ -78,7 +76,6 @@ describe LogBook::Recorder do
           end.to change(LogBook::Record, :count).by(1)
 
           record = LogBook::Record.last
-          expect(record.action).to eq('create')
           expect(record.meta['name']).to eq('test')
           expect(record.meta['arbitraty']).to eq('arbitraty')
         end
@@ -93,7 +90,6 @@ describe LogBook::Recorder do
           end.to change(LogBook::Record, :count).by(1)
 
           record = LogBook::Record.last
-          expect(record.action).to eq('create')
           expect(record.meta['name']).to eq('test')
           expect(record.meta['arbitraty']).to eq('arbitraty')
         end
@@ -108,7 +104,6 @@ describe LogBook::Recorder do
           end.to change(LogBook::Record, :count).by(1)
 
           record = LogBook::Record.last
-          expect(record.action).to eq('create')
           expect(record.meta['name']).to eq('test')
           expect(record.meta['arbitraty']).to eq('arbitraty')
         end
@@ -127,12 +122,30 @@ describe LogBook::Recorder do
         end.to change(LogBook::Record, :count).by(1)
 
         record = LogBook::Record.last
-        expect(record.action).to eq('create')
         changes = record.record_changes
         expect(changes).to have_key('email')
         expect(changes).to_not have_key('name')
         expect(changes).to_not have_key('address')
         expect(record.author).to eq(user)
+      end
+    end
+
+    context '.record_action' do
+      it 'creates a record with action' do
+        expect do
+          LogBook.with_recording do
+            LogBook.record_action('create') do
+              UserOnly.create(email: 'test', name: 'test', address: 'nowere')
+            end
+          end
+        end.to change(LogBook::Record, :count).by(1)
+
+        record = LogBook::Record.last
+        expect(record.action).to eq('create')
+        changes = record.record_changes
+        expect(changes).to have_key('email')
+        expect(changes).to_not have_key('name')
+        expect(changes).to_not have_key('address')
       end
     end
   end
@@ -147,7 +160,6 @@ describe LogBook::Recorder do
       end.to change(LogBook::Record, :count).by(1)
 
       record = LogBook::Record.last
-      expect(record.action).to eq('create')
       expect(record.parent).to eq(company)
     end
   end

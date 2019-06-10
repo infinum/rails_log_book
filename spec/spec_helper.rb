@@ -10,8 +10,4 @@ Dir['./spec/support/**/*.rb'].each { |f| require f }
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
-
-  config.after(:each) do
-    RequestStore.clear!
-  end
 end

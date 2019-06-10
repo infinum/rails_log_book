@@ -12,9 +12,9 @@ module LogBook
         scope :with_records, -> { joins(:records) }
 
         on = Array.wrap(options[:on])
-        after_create :create_record if on.empty? || on.include?(:create)
-        after_update :update_record if on.empty? || on.include?(:update)
-        after_destroy :destroy_record if on.empty? || on.include?(:destroy)
+        after_create :store_changes if on.empty? || on.include?(:create)
+        after_update :store_changes if on.empty? || on.include?(:update)
+        after_destroy :store_changes if on.empty? || on.include?(:destroy)
 
         extend LogBook::Recorder::RecordingClassMethods
         include LogBook::Recorder::RecordingInstanceMethods
@@ -22,6 +22,24 @@ module LogBook
     end
 
     module RecordingInstanceMethods
+      def recording_changes
+        @recording_changes ||= { record_changes: {}, meta: {} }
+      end
+
+      def recording_parent
+        return unless @recording_parent || recording_options[:parent]
+
+        @recording_parent ||= send(recording_options[:parent])
+      end
+
+      def recording_parent=(val)
+        @recording_parent = val
+      end
+
+      def recording_options
+        self.class.recording_options
+      end
+
       def to_squash?
         recording_options[:squash]
       end
@@ -53,43 +71,31 @@ module LogBook
         end
       end
 
-      def create_record
-        write_record(:create)
-      end
-
-      def update_record
-        write_record(:update)
-      end
-
-      def destroy_record
-        write_record(:destroy)
-      end
-
-      def write_record(action)
+      def store_changes
         return unless LogBook.recording_enabled
-        record = new_record(LogBook.store[:action] || action)
-        return unless record.changes_to_record?
-        record.save
+        return if record_changes.blank?
+
+        update_recording_changes
+        LogBook::Store.records.add(self)
       end
 
-      def new_record(action)
-        record = LogBook::Record.new(
-          action: action,
-          record_changes: record_changes,
-          author: LogBook.store[:author],
-          subject: self,
-          meta: {}
-        )
-        record.meta = log_book_meta_info(record) if recording_options[:meta].present?
-        record.parent = send(recording_options[:parent]) if recording_options[:parent].present?
-        record
+      def update_recording_changes
+        recording_changes.tap do |record|
+          record[:subject] ||= self
+          record[:author] ||= LogBook::Store.author
+          record[:action] ||= LogBook::Store.action
+          record[:parent] ||= recording_parent if recording_parent
+          record[:record_changes].merge!(record_changes)
+          record[:meta].merge!(log_book_meta_info(record)) if recording_options[:meta].present?
+        end
       end
 
       def log_book_meta_info(record)
-        case recording_options[:meta]
+        meta_options = recording_options[:meta]
+        case meta_options
         when NilClass then nil
-        when Symbol then send(recording_options[:meta], record)
-        when Proc then recording_options[:meta].call(self, record)
+        when Symbol then send(meta_options, record)
+        when Proc then meta_options.call(self, record)
         when TrueClass then log_book_meta(record)
         end
       end

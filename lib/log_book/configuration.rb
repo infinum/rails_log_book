@@ -1,28 +1,10 @@
 module LogBook
-  def self.configure
-    @configuration ||= Configuration.new
-    yield(@configuration)
-  end
+  extend Dry::Configurable
 
-  def self.config
-    @configuration ||= Configuration.new
-  end
-
-  class Configuration
-    attr_accessor :records_table_name
-    attr_accessor :ignored_attributes
-    attr_accessor :recording_enabled
-    attr_accessor :author_method
-    attr_accessor :record_squashing
-    attr_accessor :skip_if_empty_actions
-
-    def initialize
-      @records_table_name = 'records'
-      @ignored_attributes = [:updated_at, :created_at]
-      @author_method = :current_user
-      @record_squashing = false
-      @recording_enabled = false
-      @skip_if_empty_actions = [:update]
-    end
-  end
+  setting :records_table_name,    'records'
+  setting :ignored_attributes,    [:updated_at, :created_at]
+  setting :recording_enabled,     false
+  setting :author_method,         :current_user
+  setting :record_squashing,      false
+  setting :skip_if_empty_actions, [:update]
 end

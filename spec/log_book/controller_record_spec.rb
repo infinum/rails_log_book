@@ -5,6 +5,7 @@ describe UsersController, type: :controller do
     routes.draw do
       resources :users do
         post :register, on: :collection
+        post :create_core_user, on: :collection
       end
     end
     @user = User.create(name: 'user', email: 'admin')
@@ -17,7 +18,7 @@ describe UsersController, type: :controller do
       end.to change(LogBook::Record, :count).by(1)
 
       record = LogBook::Record.last
-      expect(record.action).to eq('create')
+      expect(record.action).to eq('users#create')
       expect(record.author).to eq(@user)
       changes = record.record_changes
       expect(changes).to have_key('email')
@@ -34,6 +35,22 @@ describe UsersController, type: :controller do
 
       record = LogBook::Record.last
       expect(record.action).to eq('register')
+    end
+  end
+
+  describe '#create_core_user' do
+    it 'Creates a reverse record' do
+      LogBook.config.record_squashing = true
+      expect do
+        post :create_core_user, params: { user: { email: 'Email_admin', name: 'admin' } }, session: { user_id: @user.id }
+      end.to change(LogBook::Record, :count).by(1)
+
+      record = LogBook::Record.last
+      expect(record.action).to eq('users#create_core_user')
+      changes = record.record_changes
+      expect(changes).to have_key('email')
+      expect(changes).to have_key('administrators')
+      expect(changes['administrators'].first.second).to have_key('name')
     end
   end
 end
@@ -77,6 +94,7 @@ describe CompaniesController, type: :controller do
 
   describe '#create' do
     it 'creates a company and all its users' do
+      LogBook.config.record_squashing = false
       expect do
         post :create, params: valid_params, session: { user_id: @user.id }
       end.to change(LogBook::Record, :count).by(4)

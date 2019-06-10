@@ -166,7 +166,6 @@ LogBook.enable_recording          #=> Enables recording from this point
 LogBook.disable_recording         #=> Disables recording from this point
 LogBook.record_squashing_enabled  #=> Enables record squashing from this point
 LogBook.recording_enabled         #=> Returns true if recording is enabled
-LogBook.recording_enabled=(val)   #=> Enables/Disables recording
 LogBook.squash_records            #=> Squash records with current :request_uuid
 ```
 

@@ -68,3 +68,23 @@ class UserWithAll < ActiveRecord::Base
     }
   end
 end
+
+class CoreUser < ActiveRecord::Base
+  include LogBook::Recorder
+  has_many :user_types
+
+  has_log_book_records squash: true
+end
+
+class UserType < ActiveRecord::Base
+  belongs_to :core_user
+  belongs_to :user, polymorphic: true
+end
+
+class Administrator < ActiveRecord::Base
+  include LogBook::Recorder
+  has_one :user_type, as: :user
+  has_one :core_user, through: :user_type
+
+  has_log_book_records squash: true
+end
