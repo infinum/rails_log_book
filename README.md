@@ -21,6 +21,15 @@ Then run:
 rails generate log_book:install
 rake db:migrate
 ```
+## Reasoning
+
+We built this gem because others did not offer us what we needed.
+
+Benefits:
+- new features ([Squashing](#squashing))
+- Explicit (needs to be told when to record, as opposed to paper_trail or audited which always record; ie. do not record stuff done in console)
+- Has an inbuilt caching mechanism with `meta` field
+- ``meta`` field can also be used to add aditional keys on which search queries can be run
 
 ## Usage
 
@@ -43,6 +52,73 @@ Add to controlers and actions you want the tracker to be active:
 ```
 
 By default, whenever a user record is created, updated or deleted in any actions of users\_controller a new log\_book record will be created.
+
+## Squashing
+
+The idea of squashing came when we needed to show an activity page where you have a has_many relation setup but you need to show changes only on the "main" object.
+
+Example:
+
+```ruby
+class Hotel < ApplicationRecord
+  include LogBook::Recorder
+  has_log_book_records
+
+  has_many :amenities
+  accepts_nested_attributes_for :amenities
+end
+
+class HotelAmenity < ApplicationRecord
+  include LogBook::Recorder
+  has_log_book_records, parent: :hotel
+
+  belongs_to :hotel
+  belongs_to :amenity
+end
+
+class Amenity < ApplicationRecord
+  has_many :hotels
+end
+
+class HotelsController < ApplicationController
+  def create
+    @hotel = Hotel.create(hotel_params)
+  end
+
+  def hotel_params
+    params.require(:hotel).permit(amenities_attributes: [:id, :status])
+  end
+end
+
+# having this params passed to hotels_controller:
+{ name: 'Hotel', amenitites_attributes: { 0: {id: 1, status: :avaliable}, 1: { id: 4, status: :unavaliable } } }
+
+# Without squashing you would have these records in the DB (abbreviated for clairity)
+[
+  {subject_type: 'Hotel',        subject_id: 1, parent_type: nil,     parent_id: nil, record_changes: { name: [nil, 'Hotel']}},
+  {subject_type: 'HotelAmenity', subject_id: 1, parent_type: 'Hotel', parent_id: 1,   record_changes: { name: [nil, 'avaliable']}},
+  {subject_type: 'HotelAmenity', subject_id: 4, parent_type: 'Hotel', parent_id: 1,   record_changes: { name: [nil, 'unavaliable']}},
+]
+
+# The above is rather difficult to paginate if you want to show changes done on HotelAmenities to show under Hotel.
+# With squashing enabled:
+[
+  {
+    subject_type: 'Hotel',
+    subject_id: 1,
+    parent_type: nil,
+    parent_id: nil,
+    record_changes: {
+      name: [nil, 'Hotel'],
+      hotel_amenitites: {
+        1: {status: [nil, 'avaliable']},
+        2: {status: [nil, 'unavaliable']}
+      }
+    }
+  }
+]
+
+```
 
 ## ActiveRecord Options
 
@@ -159,26 +235,16 @@ end
 
 ``` ruby
 LogBook.with_recording {}         #=> Enables recording within block
-LogBook.without_recording {}      #=> Disables recording within block
 LogBook.record_as(author) {}      #=> Records as a different author within block
+LogBook.record_action(action) {}  #=> Records as a different action within block
+LogBook.action=(value)            #=> Change default action for this request
 LogBook.with_record_squashing {}  #=> Squashes records within block
 LogBook.enable_recording          #=> Enables recording from this point
 LogBook.disable_recording         #=> Disables recording from this point
 LogBook.record_squashing_enabled  #=> Enables record squashing from this point
 LogBook.recording_enabled         #=> Returns true if recording is enabled
-LogBook.squash_records            #=> Squash records with current :request_uuid
 ```
 
-## Squashing
-
-The idea of squashing came when we needed to show an activity page where all changes made in the single request as one change.
-
-Each request has its own unique `request_uuid` and it is recorded with each record. If squashing is enabled, `after_action` method with squashing is called.
-All records with the same `request_uuid` are "squashed" into one record.
-
-``` sql
-INSERT INTO "users" ("name", "email") VALUES ("test", "test@test.com")
-```
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
