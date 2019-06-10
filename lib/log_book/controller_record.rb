@@ -3,7 +3,8 @@ module LogBook
     extend ActiveSupport::Concern
 
     included do
-      around_action :enable_recording
+      before_action :enable_recording
+      after_action :save_records
     end
 
     def enable_recording
@@ -12,9 +13,9 @@ module LogBook
       LogBook::Store.request_uuid = try(:request).try(:uuid) || SecureRandom.hex
       LogBook::Store.records = Set.new
       LogBook.enable_recording
+    end
 
-      yield
-
+    def save_records
       LogBook::SaveRecords.call
     end
 

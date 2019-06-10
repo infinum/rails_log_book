@@ -84,6 +84,7 @@ module LogBook
           record[:subject] ||= self
           record[:author] ||= LogBook::Store.author
           record[:action] ||= LogBook::Store.action
+          record[:request_uuid] ||= LogBook::Store.request_uuid
           record[:parent] ||= recording_parent if recording_parent
           record[:record_changes].merge!(record_changes)
           record[:meta].merge!(log_book_meta_info(record)) if recording_options[:meta].present?
