@@ -42,15 +42,15 @@ describe UsersController, type: :controller do
     it 'Creates a reverse record' do
       LogBook.config.record_squashing = true
       expect do
-        post :create_core_user, params: { user: { email: 'Email_admin', name: 'admin' } }, session: { user_id: @user.id }
+        post :create_core_user, params: { user: { user_type_attributes: { core_user_attributes: { email: 'Email_admin' }}, name: 'admin' }}, session: { user_id: @user.id }
       end.to change(LogBook::Record, :count).by(1)
 
       record = LogBook::Record.last
       expect(record.action).to eq('users#create_core_user')
       changes = record.record_changes
-      expect(changes).to have_key('email')
-      expect(changes).to have_key('administrators')
-      expect(changes['administrators'].first.second).to have_key('name')
+      expect(changes).to have_key('name')
+      expect(changes).to have_key('core_users')
+      expect(changes['core_users'].first.second).to have_key('email')
     end
   end
 end
@@ -144,17 +144,6 @@ describe CompaniesController, type: :controller do
       expect(log.subject_type).to eq('Company')
       expect(log.record_changes).to have_key('name')
       expect(log.record_changes).to have_key('description')
-    end
-
-    it 'squashes only squashable records' do
-      LogBook.config.record_squashing = true
-      expect do
-        post :create, params: valid_params_with_non_squashable, session: { user_id: @user.id }
-      end.to change(LogBook::Record, :count).by(2)
-
-      log = LogBook::Record.last
-      expect(log.subject_type).to eq('CompanyInfo')
-      expect(log.record_changes).to have_key('address')
     end
   end
 end

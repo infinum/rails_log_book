@@ -1,4 +1,4 @@
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'log_book/version'
 
@@ -25,11 +25,12 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'bundler', '~> 1.12'
-  spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rspec-rails'
-  spec.add_development_dependency 'rails'
+  spec.add_development_dependency 'factory_bot'
   spec.add_development_dependency 'pg'
   spec.add_development_dependency 'pry-byebug'
+  spec.add_development_dependency 'rails'
+  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rspec-rails'
 
   spec.add_dependency 'activerecord', '> 5.2'
   spec.add_dependency 'activesupport', '> 5.2'

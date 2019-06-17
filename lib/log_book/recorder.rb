@@ -23,25 +23,11 @@ module LogBook
 
     module RecordingInstanceMethods
       def recording_changes
-        @recording_changes ||= { record_changes: {}, meta: {} }
-      end
-
-      def recording_parent
-        return unless @recording_parent || recording_options[:parent]
-
-        @recording_parent ||= send(recording_options[:parent])
-      end
-
-      def recording_parent=(val)
-        @recording_parent = val
+        @recording_changes ||= RecordingChanges.new(self)
       end
 
       def recording_options
         self.class.recording_options
-      end
-
-      def to_squash?
-        recording_options[:squash]
       end
 
       def save_with_recording
@@ -60,6 +46,10 @@ module LogBook
         self.class.non_recording_columns
       end
 
+      def recording_key
+        "#{self.class.table_name}_#{id}"
+      end
+
       private
 
       def record_changes
@@ -73,22 +63,13 @@ module LogBook
 
       def store_changes
         return unless LogBook.recording_enabled
-        return if record_changes.blank?
 
-        update_recording_changes
-        LogBook::Store.records.add(self)
-      end
-
-      def update_recording_changes
         recording_changes.tap do |record|
-          record[:subject] ||= self
-          record[:author] ||= LogBook::Store.author
-          record[:action] ||= LogBook::Store.action
-          record[:request_uuid] ||= LogBook::Store.request_uuid
-          record[:parent] ||= recording_parent if recording_parent
-          record[:record_changes].merge!(record_changes)
-          record[:meta].merge!(log_book_meta_info(record)) if recording_options[:meta].present?
+          record.record_changes = record_changes
+          record.meta = log_book_meta_info(record) if recording_options[:meta].present?
         end
+
+        LogBook::Store.tree.add(recording_changes)
       end
 
       def log_book_meta_info(record)
@@ -126,6 +107,59 @@ module LogBook
 
       def default_ignored_attributes
         [primary_key, inheritance_column, *Array.wrap(LogBook.config.ignored_attributes)]
+      end
+    end
+
+    class RecordingChanges
+      attr_reader :subject
+      attr_reader :action
+      attr_reader :author
+      attr_reader :record_changes
+      attr_reader :meta
+      attr_reader :request_uuid
+      attr_accessor :recording_key
+
+      def initialize(recorder)
+        @subject = recorder
+        @recording_key = subject.recording_key
+        @record_changes = {}
+        @meta = {}
+      end
+
+      def record_changes=(value)
+        @record_changes.merge!(value)
+      end
+
+      def meta=(value)
+        @meta.merge!(value)
+      end
+
+      def changes?
+        meta.present? || record_changes.present?
+      end
+
+      def subject_key
+        subject.class.table_name
+      end
+
+      def subject_id
+        subject.id
+      end
+
+      def parent
+        self.class.new(subject.send(subject.recording_options[:parent])) if subject.recording_options[:parent]
+      end
+
+      def children
+        self.class.new(subject.send(subject.recording_options[:parent_of])) if subject.recording_options[:parent_of]
+      end
+
+      def to_h
+        {
+          subject: subject,
+          record_changes: record_changes,
+          meta: meta
+        }
       end
     end
   end

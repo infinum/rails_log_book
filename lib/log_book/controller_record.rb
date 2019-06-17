@@ -8,10 +8,10 @@ module LogBook
     end
 
     def enable_recording
-      LogBook::Store.action = "#{controller_name}##{action_name}"
-      LogBook::Store.author = current_author
-      LogBook::Store.request_uuid = try(:request).try(:uuid) || SecureRandom.hex
-      LogBook::Store.records = Set.new
+      action = "#{controller_name}##{action_name}"
+      author = current_author
+      request_uuid = try(:request).try(:uuid) || SecureRandom.hex
+      LogBook::Store.tree = LogBook::Tree.new(action: action, author: author, request_uuid: request_uuid)
       LogBook.enable_recording
     end
 

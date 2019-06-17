@@ -59,7 +59,7 @@ class UserWithAll < ActiveRecord::Base
 
   self.table_name = 'users'
   belongs_to :company
-  has_log_book_records parent: :company, meta: true, squash: true
+  has_log_book_records parent: :company, meta: true
 
   def log_book_meta(_record)
     {
@@ -73,11 +73,13 @@ class CoreUser < ActiveRecord::Base
   include LogBook::Recorder
   has_many :user_types
 
-  has_log_book_records squash: true
+  has_log_book_records
 end
 
 class UserType < ActiveRecord::Base
   belongs_to :core_user
+  accepts_nested_attributes_for :core_user
+
   belongs_to :user, polymorphic: true
 end
 
@@ -85,6 +87,7 @@ class Administrator < ActiveRecord::Base
   include LogBook::Recorder
   has_one :user_type, as: :user
   has_one :core_user, through: :user_type
+  accepts_nested_attributes_for :user_type
 
-  has_log_book_records squash: true
+  has_log_book_records parent_of: :core_user
 end

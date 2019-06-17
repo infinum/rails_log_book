@@ -13,11 +13,7 @@ class UsersController < ActionController::Base
   end
 
   def create_core_user
-    user = Administrator.new(admin_params)
-
-    user.build_user_type
-    user.core_user = user.user_type.build_core_user(core_user_params)
-    user.recording_parent = user.core_user
+    user = Administrator.create(admin_params)
 
     user.save
     render json: user.to_json
@@ -30,11 +26,7 @@ class UsersController < ActionController::Base
   end
 
   def admin_params
-    params.require(:user).permit(:name)
-  end
-
-  def core_user_params
-    params.require(:user).permit(:email)
+    params.require(:user).permit(:name, user_type_attributes: { core_user_attributes: [:id, :email]})
   end
 
   def current_author

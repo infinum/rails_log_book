@@ -1,7 +1,7 @@
 class Company < ActiveRecord::Base
   include LogBook::Recorder
 
-  has_log_book_records squash: true
+  has_log_book_records
 
   has_many :users, class_name: 'UserWithAll'
   has_one :company_info

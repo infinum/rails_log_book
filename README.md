@@ -158,7 +158,7 @@ end
 
 ### parent
 
-Define who is a parent of this object. Will be recorded in a `parent` polymorphic columns
+Define who is a parent of this object.
 
 ``` ruby
   class User < ActiveRecord::Base
@@ -167,6 +167,31 @@ Define who is a parent of this object. Will be recorded in a `parent` polymorphi
 
     # Parent is Company and will be recorded with each user change
     # has_log_book_records parent: :company
+  end
+```
+
+### parent_of
+
+Define who this object is a parent of.
+
+``` ruby
+  class Account < ActiveRecord::Base
+    include LogBook::Recorder
+    has_many :user_memberships
+    has_many :users, through: :user_memberships
+  end
+
+  def UserMembership < ActiveRecord::Base
+    belongs_to :account
+    belongs_to :user
+  end
+
+  class User < ActiveRecord::Base
+    has_one :user_membership
+    has_one :account, through: :user_membership
+
+    # Parent is Company and will be recorded with each user change
+    # has_log_book_records parent_of: :account
   end
 ```
 
@@ -187,18 +212,6 @@ Arbitrary column. This is a jsonb field which can have all kinds of information.
     # runs passed proc to assing to `:meta` field
     # has_log_book_records meta: -> { { slug: email.split('@').first } }
   end
-```
-
-### squash
-
-Enables/disables suashing on this model
-
-``` ruby
-  class User < ActiveRecord::Base
-    include LogBook::Recorder
-
-    # Enables squashing (defaults to false)
-    # has_log_book_records squash: true
 ```
 
 ## ActionController options
@@ -235,8 +248,7 @@ end
 
 ``` ruby
 LogBook.with_recording {}         #=> Enables recording within block
-LogBook.record_as(author) {}      #=> Records as a different author within block
-LogBook.record_action(action) {}  #=> Records as a different action within block
+LogBook.author=(author     )      #=> Records as a different author within block
 LogBook.action=(value)            #=> Change default action for this request
 LogBook.with_record_squashing {}  #=> Squashes records within block
 LogBook.enable_recording          #=> Enables recording from this point

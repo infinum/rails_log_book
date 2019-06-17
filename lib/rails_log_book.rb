@@ -4,6 +4,7 @@ require 'dry-configurable'
 
 require 'log_book/configuration'
 require 'log_book/store'
+require 'log_book/tree'
 require 'log_book/save_records'
 require 'log_book/record'
 require 'log_book/recorder'
@@ -16,29 +17,13 @@ module LogBook
     def with_recording
       recording_was_disabled = recording_enabled
       enable_recording
-      LogBook::Store.records = Set.new
+      LogBook::Store.tree = LogBook::Tree.new
 
       yield
 
       LogBook::SaveRecords.call
     ensure
       disable_recording unless recording_was_disabled
-    end
-
-    def record_as(author)
-      prev_author = LogBook::Store.author
-      LogBook::Store.author = author
-      yield
-    ensure
-      LogBook::Store.author = prev_author
-    end
-
-    def record_action(action)
-      prev_action = LogBook::Store.action
-      LogBook::Store.action = action
-      yield
-    ensure
-      LogBook::Store.action = prev_action
     end
 
     def recording_enabled
@@ -58,7 +43,11 @@ module LogBook
     end
 
     def action=(val)
-      LogBook::Store.action = val
+      LogBook::Store.tree.action = val
+    end
+
+    def author=(val)
+      LogBook::Store.tree.author = val
     end
   end
 end

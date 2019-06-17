@@ -1,7 +1,7 @@
 module LogBook
   class SaveRecords
     def initialize
-      @records = LogBook::Store.records
+      @tree = LogBook::Store.tree
     end
 
     def self.call
@@ -11,54 +11,46 @@ module LogBook
     def call
       return unless LogBook.recording_enabled
 
-      @records = squash_records if LogBook.record_squashing_enabled
+      squash_tree(tree) if LogBook.record_squashing_enabled
 
-      records.each do |record|
-        create_record(record)
+      tree.records(only_roots: LogBook.record_squashing_enabled).each do |_key, record|
+        create_record(record.value)
       end
     end
 
     private
 
-    attr_reader :records
+    attr_reader :tree
 
-    def squash_records
-      records.each_with_object(Set.new) do |record, new_records|
-        if !record.to_squash? || record.recording_parent.blank?
-          new_records.add(record)
-        else
+    def squash_tree(tree)
+      tree.depth.downto(1).each do |depth|
+        nodes = tree.at_depth(depth)
+        nodes.each do |_, node|
+          next unless node.value.changes?
+          parent = node.parent.value
 
-          parent = records.find { |r| r == record.recording_parent }
-          parent = parent_from_record(record) if parent.nil?
-
-          parent.recording_changes.tap do |changes|
-            changes[:record_changes] = squashed_changes(record, changes[:record_changes], :record_changes)
-            changes[:meta].merge(squashed_changes(record, changes[:meta], :meta))
-          end
-          new_records.add(parent)
+          parent.record_changes = squashed_changes(node.value, parent.record_changes, :record_changes)
+          parent.meta = squashed_changes(node.value, parent.meta, :meta)
         end
       end
     end
 
     def squashed_changes(record, object, key)
-      object[record.class.table_name] ||= {}
-      object[record.class.table_name][record.id] = record.recording_changes[key]
+      object[record.subject_key] ||= {}
+      object[record.subject_key][record.subject_id] = record.send(key)
       object
     end
 
-    def parent_from_record(record)
-      parent = record.recording_parent
-      parent.recording_changes.tap do |parent_record|
-        parent_record[:subject] ||= parent
-        parent_record[:author] ||= record.recording_changes[:author]
-        parent_record[:action] ||= record.recording_changes[:action]
-      end
-      parent
-    end
-
-
     def create_record(record)
-      LogBook::Record.create(record.recording_changes)
+      return unless record.changes?
+
+      attributes = record.to_h
+      attributes.merge!(
+        author: tree.author,
+        action: tree.action,
+        request_uuid: tree.request_uuid
+      )
+      LogBook::Record.create(attributes)
     end
   end
 end
