@@ -8,5 +8,10 @@ module LogBook
     attribute :record_squashing
 
     attribute :tree
+
+    def tree
+      return super if super
+      self.tree = LogBook::Tree.new
+    end
   end
 end
