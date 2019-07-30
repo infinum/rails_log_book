@@ -11,7 +11,8 @@ module LogBook
     end
 
     def add(record)
-      node = nodes[record.recording_key] ||= Node.new(record)
+      node = nodes[record.recording_key]
+      node = node ? node.merge(record) : nodes[record.recording_key] = Node.new(record)
       add_parent(node, record.parent)
       add_children(node, record.children)
     end
@@ -68,6 +69,11 @@ module LogBook
         @value = value
         @depth = 0
         @children = []
+      end
+
+      def merge(new_value)
+        value.record_changes = new_value.record_changes
+        self
       end
     end
   end

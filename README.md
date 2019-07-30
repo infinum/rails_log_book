@@ -235,11 +235,10 @@ Defines what method is run when looking for the author for recording
 ``` ruby
 # config/initializers/log_book.rb
 LogBook.configure do |config|
-  config.records_table_name = 'records'
   config.ignored_attributes = [:updated_at, :created_at]
   config.author_method = :current_user
   config.record_squashing = false
-  config.recording_enabled = false
+  config.always_record = false
   config.skip_if_empty_actions = [:update]
 end
 ```
@@ -248,7 +247,7 @@ end
 
 ``` ruby
 LogBook.with_recording {}         #=> Enables recording within block
-LogBook.author=(author     )      #=> Records as a different author within block
+LogBook.author=(author)           #=> Records as a different author within block
 LogBook.action=(value)            #=> Change default action for this request
 LogBook.with_record_squashing {}  #=> Squashes records within block
 LogBook.enable_recording          #=> Enables recording from this point

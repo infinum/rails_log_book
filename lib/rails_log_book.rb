@@ -27,7 +27,7 @@ module LogBook
     end
 
     def recording_enabled
-      LogBook::Store.recording_enabled || LogBook.config.recording_enabled
+      LogBook::Store.recording_enabled || LogBook.config.always_record
     end
 
     def record_squashing_enabled
