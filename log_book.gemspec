@@ -34,5 +34,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'activerecord', '> 5.2'
   spec.add_dependency 'activesupport', '> 5.2'
-  spec.add_dependency 'dry-configurable'
+  spec.add_dependency 'dry-configurable', '> 0.12'
 end
